@@ -145,3 +145,13 @@ x86/
 
 # Publish Web Output
 *.[Pp]ublish.xml
+
+# Unity temp
+.utmp/
+
+# Build outputs
+/[Bb]uilds/
+*.apk
+*.aab
+*_BackUpThisFolder_ButDontShipItWithYourGame/
+*_BurstDebugInformation_DoNotShip/

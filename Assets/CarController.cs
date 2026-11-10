@@ -8,25 +8,34 @@ public class CarController : MonoBehaviour
     float speed = 0f;
     Vector2 startPos;
 
+    InputAction swipeAction;
+    InputAction swipePointAction;
+    AudioSource audioSource;
+
     void Start()
     {
         Application.targetFrameRate = 60;
+
+        swipeAction = InputSystem.actions.FindAction("Car/Swipe");
+        swipePointAction = InputSystem.actions.FindAction("Car/SwipePoint");
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (swipeAction.WasPressedThisFrame())
         {
-            startPos = Mouse.current.position.value;
+            startPos = swipePointAction.ReadValue<Vector2>();
         }
-        else if (Mouse.current.leftButton.wasReleasedThisFrame)
+        else if (swipeAction.WasReleasedThisFrame())
         {
-            Vector2 endPos = Mouse.current.position.value;
+            Vector2 endPos = swipePointAction.ReadValue<Vector2>();
             float swipeLength = endPos.x - startPos.x;
 
             speed = swipeLength / divisor;
-
-            GetComponent<AudioSource>().Play();
+            
+            audioSource.Play();
         }
 
         transform.Translate(speed, 0f, 0f);
